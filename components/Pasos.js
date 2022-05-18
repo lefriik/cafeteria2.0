@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+
 const pasos = [
     {paso: 1, nombre: 'Menu', url: '/'},
     {paso: 2, nombre: 'Resumen', url: '/resumen'},
@@ -8,7 +9,26 @@ const pasos = [
 
 const Pasos = () => {
 
+ 
     const router = useRouter()
+
+    const calcularProgreso = () => {
+         
+      /*  const porcentaje = (paso / 3) * 100 */
+
+      let valor;
+      if( router.pathname === '/' ){
+          valor = 2
+      } else if( router.pathname === '/resumen'){
+          valor = 50
+      } else {
+          valor = 100
+      }
+
+      return valor;
+
+
+    }
 
   return (
     <>
@@ -17,10 +37,18 @@ const Pasos = () => {
                 <button 
                     onClick={() => {
                         router.push(paso.url) //redireccion
+                      
                     }}
                     className="text-2xl font-bold"
                     key={paso.paso} >{paso.nombre}</button>
             ))}
+        </div>
+
+        <div className='bg-gray-100 mb-10'>
+            <div className='rounded-full bg-amber-500 text-xs leading-none h-2 text-center text-white'style={{ width: `${calcularProgreso()}%` }} >
+                    {/*Leading none quiere decir que no tendra interlineado */}
+            </div>
+
         </div>
     
     </>
